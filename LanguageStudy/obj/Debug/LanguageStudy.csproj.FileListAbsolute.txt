@@ -1,0 +1,8 @@
+C:\work\GitHub\LanguageStudy\LanguageStudy\bin\Debug\LanguageStudy.exe.config
+C:\work\GitHub\LanguageStudy\LanguageStudy\bin\Debug\LanguageStudy.exe
+C:\work\GitHub\LanguageStudy\LanguageStudy\bin\Debug\LanguageStudy.pdb
+C:\work\GitHub\LanguageStudy\LanguageStudy\obj\Debug\LanguageStudy.csproj.AssemblyReference.cache
+C:\work\GitHub\LanguageStudy\LanguageStudy\obj\Debug\LanguageStudy.csproj.SuggestedBindingRedirects.cache
+C:\work\GitHub\LanguageStudy\LanguageStudy\obj\Debug\LanguageStudy.csproj.CoreCompileInputs.cache
+C:\work\GitHub\LanguageStudy\LanguageStudy\obj\Debug\LanguageStudy.exe
+C:\work\GitHub\LanguageStudy\LanguageStudy\obj\Debug\LanguageStudy.pdb
