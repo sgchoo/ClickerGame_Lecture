@@ -1,38 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Delegate
+namespace UsingCallback
 {
-    delegate int MyDelegate( int a, int b );
+    delegate int Compare(int a, int b);
 
-    class Calculator
+    class Program
     {
-        public int Plus(int a, int b)
+        static int AscendCompare(int a, int b)
         {
-            return a + b;
+            if (a > b)          return 1;
+            else if (a == b)    return 0;
+            else                return -1;
         }
 
-        public int Minus(int a, int b)
+        static int DescendCompare(int a, int b)
         {
-            return (a - b);
+            if (a < b)          return 1;
+            else if(a == b)     return 0;
+            else                return -1;
         }
-    }
 
-    internal class Program
-    {
+        static void BubbleSort(int[] Dataset, Compare compare)
+        {
+            int i, j, temp = 0;
+
+            for (i = 0; i < Dataset.Length - 1; i++)
+            {
+                for (j = 0; j < Dataset.Length - (i + 1); j++)
+                {
+                    if (compare(Dataset[j], Dataset[j + 1]) > 0)
+                    {
+                        temp = Dataset[j + 1];
+                        Dataset[j + 1] = Dataset[j];
+                        Dataset[j] = temp;
+                    }
+                }
+            }
+        }
+
         static void Main(string[] args)
         {
-            Calculator calculator = new Calculator();
-            MyDelegate CallBack;
+            int[] array = { 3, 7, 4, 2, 10 };
 
-            CallBack = new MyDelegate(calculator.Plus);
-            Console.WriteLine(CallBack(3, 4));
+            Console.WriteLine("Sorting ascending...");
+            BubbleSort(array, new Compare(AscendCompare));
 
-            CallBack = new MyDelegate(calculator.Minus);
-            Console.WriteLine(CallBack(7, 5));
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write($"{array[i]} ");
+            }
+
+            int[] array2 = { 7, 2, 8, 10, 11 };
+            Console.WriteLine("\nSorting descending...");
+            BubbleSort(array2, new Compare(DescendCompare));
+
+            for (int i = 0; i < array2.Length; i++)
+            {
+                Console.Write($"{array2[i]} ");
+            }
+
+            Console.WriteLine();
         }
     }
 }
