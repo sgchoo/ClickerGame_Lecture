@@ -5,26 +5,20 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Global
+namespace DeepCopy
 {
-    class Global
+    class Myclass
     {
-        public static int Count = 0;
-    }
-    
-    class ClassA
-    {
-        public ClassA() 
-        {
-            Global.Count++;
-        }
-    }
+        public int MyField1;
+        public int MyField2;
 
-    class ClassB
-    {
-        public ClassB()
+        public Myclass DeepCopy()
         {
-            Global.Count++;
+            Myclass newCopy = new Myclass();
+            newCopy.MyField1 = this.MyField1;
+            newCopy.MyField2 = this.MyField2;
+
+            return newCopy;
         }
     }
 
@@ -32,14 +26,33 @@ namespace Global
     {
         static void Main(string[] args)
         {
-            Console.WriteLine($"Global.Count : {Global.Count}");
+            Console.WriteLine("Shallow Copy");
 
-            new ClassA();
-            new ClassA();
-            new ClassB();
-            new ClassB();
+            { 
+                Myclass source = new Myclass();
+                source.MyField1 = 10;
+                source.MyField2 = 20;
 
-            Console.WriteLine($"Global.Count : {Global.Count}");
+                Myclass target = source;
+                target.MyField2 = 30;
+
+                Console.WriteLine($"{source.MyField1} {source.MyField2}");
+                Console.WriteLine($"{target.MyField1} {target.MyField2}");
+            }
+
+            Console.WriteLine("Deep Copy");
+
+            {
+                Myclass source = new Myclass();
+                source.MyField1 = 10;
+                source.MyField2 = 20;
+
+                Myclass target = source.DeepCopy();
+                target.MyField2 = 30;
+
+                Console.WriteLine($"{source.MyField1} {source.MyField2}");
+                Console.WriteLine($"{target.MyField1} {target.MyField2}");
+            }
         }
     }
 }
