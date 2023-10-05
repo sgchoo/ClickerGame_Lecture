@@ -5,33 +5,26 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Constructor
+namespace Global
 {
-    class Cat
+    class Global
     {
-        public string Name;
-        public string Color;
-
-        public Cat() 
+        public static int Count = 0;
+    }
+    
+    class ClassA
+    {
+        public ClassA() 
         {
-            Name = "";
-            Color = "";
+            Global.Count++;
         }
+    }
 
-        public Cat(string _Name, string _Color)
+    class ClassB
+    {
+        public ClassB()
         {
-            Name = _Name;
-            Color = _Color;
-        }
-
-        ~Cat()
-        {
-            Console.WriteLine($"{Name} : 잘가");
-        }
-
-        public void Meow()
-        {
-            Console.WriteLine($"{Name} : 야옹");
+            Global.Count++;
         }
     }
 
@@ -39,13 +32,14 @@ namespace Constructor
     {
         static void Main(string[] args)
         {
-            Cat kitty = new Cat("키티", "하얀색");
-            kitty.Meow();
-            Console.WriteLine($"{kitty.Name} : {kitty.Color}");
+            Console.WriteLine($"Global.Count : {Global.Count}");
 
-            Cat nero = new Cat("네로", "검은색");
-            nero.Meow();
-            Console.WriteLine($"{nero.Name} : {nero.Color}");
+            new ClassA();
+            new ClassA();
+            new ClassB();
+            new ClassB();
+
+            Console.WriteLine($"Global.Count : {Global.Count}");
         }
     }
 }
