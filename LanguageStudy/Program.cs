@@ -5,54 +5,33 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeepCopy
+namespace CopyingArray
 {
-    class Myclass
+    class MainApp
     {
-        public int MyField1;
-        public int MyField2;
-
-        public Myclass DeepCopy()
+        static void CopyArray<T>(T[] source, T[] target)
         {
-            Myclass newCopy = new Myclass();
-            newCopy.MyField1 = this.MyField1;
-            newCopy.MyField2 = this.MyField2;
-
-            return newCopy;
+            for (int i = 0; i < source.Length; i++)
+                target[i] = source[i];
         }
-    }
 
-    class Program
-    {
         static void Main(string[] args)
         {
-            Console.WriteLine("Shallow Copy");
+            int[] source = { 1, 2, 3, 4, 5 };
+            int[] target = new int[source.Length];
 
-            { 
-                Myclass source = new Myclass();
-                source.MyField1 = 10;
-                source.MyField2 = 20;
+            CopyArray<int>(source, target);
 
-                Myclass target = source;
-                target.MyField2 = 30;
+            foreach (int element in target)
+                Console.WriteLine(element);
 
-                Console.WriteLine($"{source.MyField1} {source.MyField2}");
-                Console.WriteLine($"{target.MyField1} {target.MyField2}");
-            }
+            string[] source2 = { "하나", "둘", "셋", "넷", "다섯" };
+            string[] target2 = new string[source2.Length];
 
-            Console.WriteLine("Deep Copy");
+            CopyArray<string>(source2, target2);
 
-            {
-                Myclass source = new Myclass();
-                source.MyField1 = 10;
-                source.MyField2 = 20;
-
-                Myclass target = source.DeepCopy();
-                target.MyField2 = 30;
-
-                Console.WriteLine($"{source.MyField1} {source.MyField2}");
-                Console.WriteLine($"{target.MyField1} {target.MyField2}");
-            }
+            foreach (var element in target2)
+                Console.WriteLine(element);
         }
     }
 }
