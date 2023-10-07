@@ -7,31 +7,24 @@ using System.Runtime.Remoting.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UsingGenericList
+namespace UsingGenericQueue
 {
     class MainApp
     {
         static void Main(string[] arg)
         {
-            List<int> list = new List<int>();
-            for(int i = 0; i < 5; i++)
-                list.Add(i);
+            Queue<int> queue = new Queue<int>();
 
-            foreach(int element in list)
-                Console.WriteLine($"{element}");
-            Console.WriteLine();
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Enqueue(3);
+            queue.Enqueue(4);
+            queue.Enqueue(5);
 
-            list.RemoveAt(2);
-
-            foreach(int element in list)
-                Console.WriteLine($"{element}");
-            Console.WriteLine();
-
-            list.Insert(2, 2);
-            
-            foreach (int element in list)
-                Console.WriteLine($"{element}");
-            Console.WriteLine();
+            while (queue.Count > 0)
+            {
+                Console.WriteLine(queue.Dequeue());
+            }
         }
     }
 }
