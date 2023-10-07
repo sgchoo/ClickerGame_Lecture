@@ -7,24 +7,25 @@ using System.Runtime.Remoting.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UsingGenericStack
+namespace UsingDictionary
 {
     class MainApp
     {
         static void Main(string[] arg)
         {
-            Stack<int> stack = new Stack<int>();
+            Dictionary<string, string> dic = new Dictionary<string, string>();
 
-            stack.Push(1);
-            stack.Push(2);
-            stack.Push(3);
-            stack.Push(4);
-            stack.Push(5);
+            dic["하나"] = "One";
+            dic["둘"] = "Two";
+            dic["셋"] = "Three";
+            dic["넷"] = "Four";
+            dic["다섯"] = "Five";
 
-            while (stack.Count > 0)
-            {
-                Console.WriteLine(stack.Pop());
-            }
+            Console.WriteLine(dic["하나"]);
+            Console.WriteLine(dic["둘"]);
+            Console.WriteLine(dic["셋"]);
+            Console.WriteLine(dic["넷"]);
+            Console.WriteLine(dic["다섯"]);
         }
     }
 }
