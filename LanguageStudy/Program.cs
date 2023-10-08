@@ -9,87 +9,60 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EnumerableGeneric
+namespace GenericDelegate
 {
-    class MyList<T> : IEnumerable<T>, IEnumerator<T>
-    {
-        private T[] array;
-        int position = -1;
-
-        public MyList()
-        {
-            array = new T[3];
-        }
-
-        public T this[int index]
-        {
-            get { return array[index]; }
-            set
-            {
-                if (index >= array.Length)
-                {
-                    Array.Resize(ref array, index + 1);
-                    Console.WriteLine($"Array Resized : {array.Length}");
-                }
-
-                array[index] = value;
-            }
-        }
-
-        public int Length { get { return array.Length; } }
-
-        public IEnumerator<T> GetEnumerator() { return this; }
-
-        IEnumerator IEnumerable.GetEnumerator() { return this; }
-
-        public T Current { get { return array[position]; } }
-
-        object IEnumerator.Current { get { return array[position]; } }
-        
-        public bool MoveNext()
-        {
-            if(position == array.Length - 1)
-            {
-                Reset();
-                return false;
-            }
-
-            position++;
-            return (position < array.Length);
-        }
-
-        public void Reset()
-        {
-            position = -1;
-        }
-
-        public void Dispose() { }
-    }
+    delegate int Compare<T>(T a, T b);
+    
     class MainApp
     {
+        static int AscendCompare<T>(T a, T b) where T : IComparable<T>
+        {
+            return a.CompareTo(b);
+        }
+
+        static int DescendCompare<T>(T a, T b) where T : IComparable<T>
+        {
+            return a.CompareTo(b) * -1;
+        }
+
+        static void BubbleSort<T>(T[] DataSet, Compare<T> compare)
+        {
+            int i, j = 0;
+            T temp;
+
+            for(i = 0; i < DataSet.Length; i++)
+            {
+                for(j = 0; j < DataSet.Length - (i + 1); j++)
+                {
+                    if (compare(DataSet[j], DataSet[j + 1]) > 0)
+                    {
+                        temp = DataSet[j + 1];
+                        DataSet[j + 1] = DataSet[j];
+                        DataSet[j] = temp;
+                    }
+                }
+            }
+        }
+
         static void Main(string[] arg)
         {
-            MyList<string> str_list = new MyList<string>();
-            str_list[0] = "adc";
-            str_list[1] = "def";
-            str_list[2] = "ghi";
-            str_list[3] = "jkl";
-            str_list[4] = "mno";
+            int[] array = { 3, 7, 4, 2, 10 };
 
-            foreach(string str in str_list)
-                Console.WriteLine(str);
+            Console.WriteLine("Sorting ascending...");
+            BubbleSort<int>(array, new Compare<int>(AscendCompare));
+
+            for (int i = 0; i < array.Length; i++)
+                Console.WriteLine($"{array[i]} ");
+
+            string[] array2 = { "abc", "def", "ghi", "jkl", "mno" };
+
+            Console.WriteLine("\nSorting descending...");
+            BubbleSort<string>(array2, new Compare<string>(DescendCompare));
+
+            for (int i = 0; i < array2.Length; i++)
+                Console.WriteLine($"{array2[i]} ");
 
             Console.WriteLine();
-
-            MyList<int> int_list = new MyList<int>();
-            int_list[0] = 0;
-            int_list[1] = 1;
-            int_list[2] = 2;
-            int_list[3] = 3;
-            int_list[4] = 4;
-
-            foreach(int i in int_list)
-                Console.WriteLine(i);
         }
     }
 }
