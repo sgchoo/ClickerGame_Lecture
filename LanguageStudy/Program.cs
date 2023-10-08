@@ -9,68 +9,39 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DelegateChains
+namespace EventTest
 {
-    delegate void Notify(string message);
+    delegate void EventHandler(string message);
 
-    class Notifier
+    class MyNotifier
     {
-        public Notify EventOccured;
-    }
-
-    class EventListener
-    {
-        private string name;
-        public EventListener(string name)
+        public event EventHandler SomethingHappened;
+        public void DoSomething(int number)
         {
-            this.name = name;
-        }
-
-        public void SomethingHappened(string message)
-        {
-            Console.WriteLine($"{name}.SomethingHappened : {message}");
+            int temp = number % 10;
+            if (temp != 0 && temp % 3 == 0)
+            {
+                SomethingHappened(String.Format("{0} : 짝", number));
+            }
         }
     }
-
+    
     class MainApp
     {
+        public static void MyHandler(string message)
+        {
+            Console.WriteLine(message);
+        }
+
         static void Main(string[] arg)
         {
-            Notifier notifier = new Notifier();
-            EventListener listener1 = new EventListener("Listener1");
-            EventListener listener2 = new EventListener("Listener2");
-            EventListener listener3 = new EventListener("Listener3");
+            MyNotifier notifier = new MyNotifier();
+            notifier.SomethingHappened += new EventHandler(MyHandler);
 
-            notifier.EventOccured += listener1.SomethingHappened;
-            notifier.EventOccured += listener2.SomethingHappened;
-            notifier.EventOccured += listener3.SomethingHappened;
-            notifier.EventOccured("You've got mail.");
-
-            Console.WriteLine();
-
-            notifier.EventOccured -= listener2.SomethingHappened;
-            notifier.EventOccured("Download complete.");
-
-            Console.WriteLine();
-
-            notifier.EventOccured = new Notify(listener2.SomethingHappened)
-                                  + new Notify(listener3.SomethingHappened);
-            notifier.EventOccured("Nuclear launch detected");
-
-            Console.WriteLine();
-
-            Notify notify1 = new Notify(listener1.SomethingHappened);
-            Notify notify2 = new Notify(listener2.SomethingHappened);
-
-            notifier.EventOccured = 
-                (Notify)Delegate.Combine(notify1, notify2);
-            notifier.EventOccured("Fire!!");
-
-            Console.WriteLine();
-
-            notifier.EventOccured = 
-                (Notify)Delegate.Remove(notifier.EventOccured, notify2);
-            notifier.EventOccured("RPG!");
+            for(int i = 0; i < 30; i++)
+            {
+                notifier.DoSomething(i);
+            }
         }
     }
 }
