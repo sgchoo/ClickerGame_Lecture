@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Metadata;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Reflection;
 
-namespace SimpleLambda
+namespace FuncTest
 {
     class MainApp
     {
-        delegate int Calculate(int a, int b);
-
-        static void Main(string[] arg)
+        static void Main(string[] args)
         {
-            Calculate calc = (a, b) => a + b;
+            Func<int> Func1 = () => 10;
+            Console.WriteLine($"func1() : {Func1()}");
 
-            Console.WriteLine($"{3} + {4} : {calc(3, 4)}");
+            Func<int, int> Func2 = (x) => x * 2;
+            Console.WriteLine($"func2(4) : {Func2(4)}");
+
+            Func<double, double, double> Func3 = (x, y) => x / y;
+            Console.WriteLine($"func(22, 7) : {Func3(22, 7)}");
         }
     }
 }
