@@ -1,20 +1,28 @@
 ﻿using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
-namespace FuncTest
+namespace ActionTest
 {
     class MainApp
     {
         static void Main(string[] args)
         {
-            Func<int> Func1 = () => 10;
-            Console.WriteLine($"func1() : {Func1()}");
+            Action act1 = () => Console.WriteLine("Action()");
+            act1();
 
-            Func<int, int> Func2 = (x) => x * 2;
-            Console.WriteLine($"func2(4) : {Func2(4)}");
+            int result = 0;
+            Action<int> act2 = (x) => result = x * x;
+            
+            act2(3);
+            Console.WriteLine($"result : {result}");
 
-            Func<double, double, double> Func3 = (x, y) => x / y;
-            Console.WriteLine($"func(22, 7) : {Func3(22, 7)}");
+            Action<double, double> act3 = (x, y) =>
+            {
+                double pi = x / y;
+                Console.WriteLine($"Action<T1, T2>({x}, {y}) : {pi}");
+            };
+            act3(22.0, 7.0);
         }
     }
 }
